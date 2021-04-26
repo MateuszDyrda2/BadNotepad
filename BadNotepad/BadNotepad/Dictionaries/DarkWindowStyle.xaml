@@ -41,9 +41,10 @@
                                        Grid.Column="1"/>
                             <Menu Grid.Column="0" Height="30" HorizontalAlignment="Left" Background="{TemplateBinding Background}" WindowChrome.IsHitTestVisibleInChrome="True">
                                 <MenuItem Header="_File" Height="30" Background="#2b2b27" Foreground="#bfbfb2">
-                                    <MenuItem Header="_Open" Background="#2b2b27" Foreground="#bfbfb2"/>
-                                    <MenuItem Header="_Save" Background="#2b2b27" Foreground="#bfbfb2"/>
-                                    <MenuItem Header="_SaveAs" Background="#2b2b27" Foreground="#bfbfb2"/>
+                                    <MenuItem Header="_New" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.NewCommand}"/>
+                                    <MenuItem Header="_Open" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.OpenCommand}"/>
+                                    <MenuItem Header="_Save" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.SaveCommand}"/>
+                                    <MenuItem Header="_SaveAs" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.SaveAsCommand}"/>
                                     <MenuItem Header="_Exit" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.CloseCommand}"/>
                                 </MenuItem>
                                 <MenuItem Header="_Edit" Background="#2b2b27" Foreground="#bfbfb2"/>

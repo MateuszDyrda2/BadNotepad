@@ -19,16 +19,30 @@
                 <TextBlock x:Name="cursorPosition"/>
             </StatusBarItem>
         </StatusBar>
+        <StackPanel DockPanel.Dock="Top" 
+                    Background="#21200e" Orientation="Horizontal">
+            <ItemsControl ItemsSource="{Binding Documents}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Content="{Binding Filename}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
         <RichTextBox x:Name="textField" DockPanel.Dock="Top"
                     VerticalScrollBarVisibility="Visible"
                     AcceptsReturn="True" AcceptsTab="True"
-                     Background="#21201e" Foreground="White">
+                     Background="#21201e" Foreground="White"
+                     DataContext="{Binding CurrentDocument}" >
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>
                 </Style>
             </RichTextBox.Resources>
             <FlowDocument>
+                <Paragraph>
+                    <Run Text="{Binding Content, Mode=TwoWay}"/>
+                </Paragraph>
             </FlowDocument>
         </RichTextBox>
     </DockPanel>
