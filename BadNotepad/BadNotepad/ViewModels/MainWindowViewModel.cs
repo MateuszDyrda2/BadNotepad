@@ -20,6 +20,7 @@ namespace BadNotepad.ViewModels
             darkWindow = new BarCommands(m_fileSystem);
             documents = new ObservableCollection<Document>();
             documents.CollectionChanged += DocumentChanged;
+            FileSystem.OpenStartFile();
         }
 
         private void DocumentChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -59,5 +60,9 @@ namespace BadNotepad.ViewModels
             Documents.Add(document);
         }
 
+        public void ChangeDocument(object document)
+        {
+            CurrentDocument = document as Document;
+        }
     }
 }

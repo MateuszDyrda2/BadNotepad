@@ -1,5 +1,6 @@
 ﻿using BadNotepad.ViewModels;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BadNotepad
 {
@@ -12,6 +13,12 @@ namespace BadNotepad
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+        }
+
+        private void lb_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            object lbi = ((sender as ListBox).SelectedItem as object);
+            (DataContext as MainWindowViewModel).ChangeDocument(lbi);
         }
     }
 }

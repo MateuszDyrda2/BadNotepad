@@ -13,6 +13,13 @@ namespace BadNotepad.Models
             m_content = content;
             m_isTouched = false;
         }
+        public Document(string path, string filename)
+        {
+            m_path = path;
+            m_filename = filename;
+            m_isTouched = false;
+        }
+
         public Document()
         {
             m_isTouched = true;

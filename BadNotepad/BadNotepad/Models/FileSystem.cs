@@ -21,13 +21,15 @@ namespace BadNotepad.Models
         {
             Document document = new Document();
             document.Content = string.Empty;
-            document.Filename = string.Empty;
+            document.Filename = "NewFile";
             document.Path = string.Empty;
             mainVM.AddNewDocument(document);
             mainVM.SetMainDocument(document);
         }
         public void SaveFile()
         {
+            if (string.IsNullOrEmpty(mainVM.CurrentDocument.Path) || (string.IsNullOrEmpty(mainVM.CurrentDocument.Filename)))
+                SaveFileAs();
             File.WriteAllText(mainVM.CurrentDocument.Path, mainVM.CurrentDocument.Content);
             mainVM.CurrentDocument.IsTouched = false;
         }
@@ -56,6 +58,14 @@ namespace BadNotepad.Models
                 mainVM.SetMainDocument(document);
             }
         }
-
+        public void OpenStartFile()
+        {
+            Document document = new Document();
+            document.Filename = "welcomeScreen.txt";
+            document.Path = "..//..//..//Resources//welcomeScreen.txt";
+            document.Content = File.ReadAllText(document.Path);
+            mainVM.AddNewDocument(document);
+            mainVM.SetMainDocument(document);
+        }
     }
 }
