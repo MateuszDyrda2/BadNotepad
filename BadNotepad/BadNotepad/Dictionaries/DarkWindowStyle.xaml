@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary x:Class="BadNotepad.Dictionaries.DarkWindowStyle"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    
     <Style x:Key="DarkWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
@@ -40,43 +42,131 @@
                                        Text="{TemplateBinding Title}"
                                        Grid.Column="1"/>
                             <Menu Grid.Column="0" Height="30" HorizontalAlignment="Left" Background="{TemplateBinding Background}" WindowChrome.IsHitTestVisibleInChrome="True">
-                                <MenuItem Header="_File" Height="30" Background="#2b2b27" Foreground="#bfbfb2">
+                                <MenuItem Header="_File" Background="Transparent" Foreground="#bfbfb2" Margin="5">
                                     <MenuItem Header="_New" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.NewCommand}"/>
                                     <MenuItem Header="_Open" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.OpenCommand}"/>
                                     <MenuItem Header="_Save" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.SaveCommand}"/>
                                     <MenuItem Header="_SaveAs" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.SaveAsCommand}"/>
                                     <MenuItem Header="_Exit" Background="#2b2b27" Foreground="#bfbfb2" Command="{Binding DarkWindow.CloseCommand}"/>
                                 </MenuItem>
-                                <MenuItem Header="_Edit" Background="#2b2b27" Foreground="#bfbfb2"/>
-                                <MenuItem Header="_Format" Background="#2b2b27" Foreground="#bfbfb2"/>
+                                <MenuItem Header="_Edit" Background="Transparent" Foreground="#bfbfb2" Margin="5" />
+                                <MenuItem Header="_Format" Background="Transparent" Foreground="#bfbfb2" Margin="5" />
                             </Menu>
                             <StackPanel Orientation="Horizontal"
                                         Grid.Column="2">
                                 <Button x:Name="buttonMinimize"
-                                        Width="15"
-                                        Margin="5"
-                                        Command="{Binding DarkWindow.MinimizeCommand}"
-                                        Content="_" 
-                                        WindowChrome.IsHitTestVisibleInChrome="True"
-                                        Background="#616157"
-                                        Foreground="#bfbfb2"/>
+                                        Width="30"
+                                        Margin="0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Command" Value="{Binding DarkWindow.MinimizeCommand}"/>
+                                            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Grid Height="10" Width="10">
+                                                        <Viewbox>
+                                                            <Path Data="M0,0 L10,0"
+                                                                  Stretch="Uniform"
+                                                                  Stroke="White"
+                                                                  />
+                                                        </Viewbox>
+                                                    </Grid>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="White"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                                 <Button x:Name="buttonRestore"
-                                        Width="15"
-                                        Margin="5"
-                                        Command="{Binding DarkWindow.RestoreCommand}"
-                                        Content="O"
-                                        WindowChrome.IsHitTestVisibleInChrome="True"
-                                        Background="#616157"
-                                        Foreground="#bfbfb2"/>
+                                        Width="30"
+                                        Margin="0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Command" Value="{Binding DarkWindow.RestoreCommand}"/>
+                                            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Grid Height="10" Width="10">
+                                                        <Viewbox>
+                                                            <Path Data="M0,0 L0,10 M0,10 L10,10 M10,10 L10,0 M10,0 L0,0"
+                                                                  Stretch="Uniform"
+                                                                  Stroke="White"/>
+                                                        </Viewbox>
+                                                    </Grid>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="White"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
 
                                 <Button x:Name="buttonClose"
-                                        Width="15"
-                                        Margin="5"
-                                        Command="{Binding DarkWindow.CloseCommand}"
-                                        Content="X"
-                                        WindowChrome.IsHitTestVisibleInChrome="True"
-                                        Background="#616157"
-                                        Foreground="#bfbfb2"/>
+                                        Width="30"
+                                        Margin="0">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="Command" Value="{Binding DarkWindow.CloseCommand}"/>
+                                            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Content">
+                                                <Setter.Value>
+                                                    <Grid Height="10" Width="10">
+                                                        <Viewbox>
+                                                            <Path Data="M0,0 L10,10 M0,10 L10, 0"
+                                                                  Stretch="Uniform"
+                                                                  Stroke="White"/>
+                                                        </Viewbox>
+                                                    </Grid>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="White"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
                             </StackPanel>
                         </Grid>
                     </Grid>

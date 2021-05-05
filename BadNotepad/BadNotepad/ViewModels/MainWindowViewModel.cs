@@ -29,7 +29,7 @@ namespace BadNotepad.ViewModels
             {
                 foreach(var x in e.OldItems)
                 {
-
+                  
                 }
             }
             else if(e.Action == NotifyCollectionChangedAction.Add)
@@ -39,6 +39,12 @@ namespace BadNotepad.ViewModels
 
                 }
             }
+        }
+        
+        void PopupSave(Document document)
+        {
+            string text = "Document " + document.Filename + "is not saved. Do you want to save it?";
+            
         }
 
         public BarCommands DarkWindow { get => darkWindow;  }
