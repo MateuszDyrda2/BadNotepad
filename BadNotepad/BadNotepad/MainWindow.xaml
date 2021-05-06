@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BadNotepad"
+        xmlns:m="clr-namespace:BadNotepad.Models"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
@@ -12,6 +13,11 @@
         MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
         Style="{StaticResource DarkWindowStyle}">
     <Window.Resources>
+        <Viewbox x:Key="XSign" x:Shared="False">
+            <Path Data="M0,0 L10,10 M0,10 L10, 0"
+                    Stretch="Uniform"
+                    Stroke="White"/>
+        </Viewbox>
         <Style TargetType="{x:Type ToggleButton}">
             <Setter Property="Background" Value="Black"/>
             <Setter Property="Foreground" Value="White"/>
@@ -19,36 +25,36 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border Background="{TemplateBinding Background}">
-                            <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
-                                <ContentPresenter Margin="5,0,5,0"/>
-                                <Button>
+                        <Border Background="{TemplateBinding Background}" Focusable="False">
+                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
+                                <ContentPresenter Margin="5,0,5,0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                                <Button DockPanel.Dock="Right" Width="15" >
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
-                                            <Setter Property="Content">
-                                                <Setter.Value>
-                                                    <Grid Height="10" Width="10">
-                                                        <Viewbox>
-                                                            <Path Data="M0,0 L10,10 M0,10 L10, 0"
-                                                                  Stretch="Uniform"
-                                                                  Stroke="White"/>
-                                                        </Viewbox>
-                                                    </Grid>
-                                                </Setter.Value>
-                                            </Setter>
+                                            <Setter Property="Content"
+                                                    Value="{StaticResource XSign}"/>
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Setter Property="Foreground" Value="White"/>
                                             <Setter Property="BorderThickness" Value="0"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Border Background="{TemplateBinding Background}">
+                                                            <ContentPresenter Width="10" Height="10"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    <Setter Property="Background" Value="Transparent">
                                                     </Setter>
                                                 </Trigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Button.Style>
                                 </Button>
-                            </StackPanel>
+                            </DockPanel>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -74,7 +80,7 @@
         <ListBox x:Name="lb" DockPanel.Dock="Top" ItemsSource="{Binding Documents}" 
                  SelectedItem="{Binding CurrentDocument}" SelectionChanged="lb_SelectionChanged"
                  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 Background="#141413">
+                 Background="#141413" MinHeight="25" BorderThickness="0">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
@@ -89,6 +95,7 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
+                    <Setter Property="Margin" Value="0.2"/>
                 </Style>
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
@@ -103,13 +110,14 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox x:Name="textBox" DockPanel.Dock="Top"
+        <m:CustomTextBox x:Name="textBox" DockPanel.Dock="Top"
                  VerticalScrollBarVisibility="Auto"
                  AcceptsReturn="True" AcceptsTab="True"
                  Background="#21201e" Foreground="White"
                  DataContext="{Binding CurrentDocument}"
-                 Text="{Binding Content, Mode=TwoWay}">
-        </TextBox>
+                 Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 BorderThickness="0" FontFamily="Consolas" FontSize="14">
+        </m:CustomTextBox>
     </DockPanel>
 
 </Window>
