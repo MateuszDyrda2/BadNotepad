@@ -11,7 +11,7 @@ namespace BadNotepad.Models
 {
     public class FileSystem
     {
-        private MainWindowViewModel mainVM; 
+        private MainWindowViewModel mainVM;
         public FileSystem(MainWindowViewModel viewModel)
         {
             mainVM = viewModel;
@@ -28,23 +28,44 @@ namespace BadNotepad.Models
         }
         public void SaveFile()
         {
-            if (string.IsNullOrEmpty(mainVM.CurrentDocument.Path) || (string.IsNullOrEmpty(mainVM.CurrentDocument.Filename)))
-                SaveFileAs();
-            File.WriteAllText(mainVM.CurrentDocument.Path, mainVM.CurrentDocument.Content);
-            mainVM.CurrentDocument.IsTouched = false;
+            SaveDocument(mainVM.CurrentDocument);
         }
         public void SaveFileAs()
         {
-            var saveFile = new SaveFileDialog();
-            saveFile.Filter = "Text File (*.txt)|*.txt";
-            if(saveFile.ShowDialog() == true)
+            SaveDocumentAs(mainVM.CurrentDocument);
+        }
+
+        public static void SaveDocument(Document document)
+        {
+            if (string.IsNullOrEmpty(document.Path) || string.IsNullOrEmpty(document.Filename))
             {
-                mainVM.CurrentDocument.Filename = saveFile.SafeFileName;
-                mainVM.CurrentDocument.Path = saveFile.FileName;
-                File.WriteAllText(mainVM.CurrentDocument.Path, mainVM.CurrentDocument.Content);
-                mainVM.CurrentDocument.IsTouched = false;
+                var saveFile = new SaveFileDialog();
+                saveFile.Filter = "Text File (*.txt)|*.txt";
+                if (saveFile.ShowDialog() == true)
+                {
+                    document.Filename = saveFile.SafeFileName;
+                    document.Path = saveFile.FileName;
+                }
+            }
+            else
+            {
+                File.WriteAllText(document.Path, document.Content);
+                document.IsTouched = false;
             }
         }
+        public static void SaveDocumentAs(Document document)
+        {
+            var saveFile = new SaveFileDialog();
+            saveFile.Filter = "Text File (*.txt)|*.txt";
+            if (saveFile.ShowDialog() == true)
+            {
+                document.Filename = saveFile.SafeFileName;
+                document.Path = saveFile.FileName;
+                File.WriteAllText(document.Path, document.Content);
+                document.IsTouched = false;
+            }
+        }
+
         public void OpenFile()
         {
             var openFile = new OpenFileDialog();
@@ -60,9 +81,9 @@ namespace BadNotepad.Models
         }
         public void OpenStartFile()
         {
-            Document document = new Document();
-            document.Filename = "welcomeScreen.txt";
-            document.Path = "..//..//..//Resources//welcomeScreen.txt";
+            string path = "..//..//..//Resources//welcomeScreen.txt";
+            string filename = "welcomeScreen.txt";
+            Document document = new Document(path, filename);
             document.Content = File.ReadAllText(document.Path);
             mainVM.AddNewDocument(document);
             mainVM.SetMainDocument(document);

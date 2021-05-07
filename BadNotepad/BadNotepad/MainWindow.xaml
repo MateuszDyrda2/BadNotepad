@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:BadNotepad"
         xmlns:m="clr-namespace:BadNotepad.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="720" Width="1280"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
@@ -19,7 +19,7 @@
                     Stroke="White"/>
         </Viewbox>
         <Style TargetType="{x:Type ToggleButton}">
-            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Background" Value="{StaticResource EditorDark}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
@@ -27,8 +27,22 @@
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Border Background="{TemplateBinding Background}" Focusable="False">
                             <DockPanel HorizontalAlignment="Stretch" LastChildFill="False">
+                                <Canvas Width="7" Height="7" Margin="5,0">
+                                    <Ellipse DockPanel.Dock="Left"
+                                            Width="7" Height="7" Fill="White"/>
+                                    <Canvas.Visibility>
+                                        <Binding Path="IsTouched">
+                                            <Binding.Converter>
+                                                <BooleanToVisibilityConverter/>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Canvas.Visibility>
+                                </Canvas>
                                 <ContentPresenter Margin="5,0,5,0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                                <Button DockPanel.Dock="Right" Width="15" >
+                                <Button DockPanel.Dock="Right" Width="15" 
+                                        Command="{Binding RelativeSource={
+                                        RelativeSource FindAncestor, AncestorType={x:Type ListBox}},
+                                        Path=DataContext.DeleteDoc}" CommandParameter="{Binding}">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}">
                                             <Setter Property="Content"
@@ -47,7 +61,7 @@
                                             </Setter>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="Transparent">
+                                                    <Setter Property="Background" Value="{StaticResource ComplementaryEditor}">
                                                     </Setter>
                                                 </Trigger>
                                             </Style.Triggers>
@@ -58,21 +72,20 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#21201e"/>
+                                <Setter Property="Background" Value="{StaticResource ComplementaryEditor}"/>
                             </Trigger>
                             <Trigger Property="IsChecked" Value="True">
-                                <Setter Property="Background" Value="#21201e"/>
+                                <Setter Property="Background" Value="{StaticResource EditorColor}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="MouseDown" Handler="ToggleButton_MouseDown"/>
         </Style>
     </Window.Resources>
     <DockPanel x:Name="RootWindow" LastChildFill="True">
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-        </StackPanel>
-        <StatusBar DockPanel.Dock="Bottom" Background="#141413">
+        <StatusBar DockPanel.Dock="Bottom" Background="{StaticResource EditorDark}">
             <StatusBarItem>
                 <TextBlock x:Name="cursorPosition"/>
             </StatusBarItem>
@@ -80,7 +93,7 @@
         <ListBox x:Name="lb" DockPanel.Dock="Top" ItemsSource="{Binding Documents}" 
                  SelectedItem="{Binding CurrentDocument}" SelectionChanged="lb_SelectionChanged"
                  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                 Background="#141413" MinHeight="25" BorderThickness="0">
+                 Background="{StaticResource EditorDark}" MinHeight="25" BorderThickness="0">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel IsItemsHost="True" Orientation="Horizontal"/>
@@ -110,14 +123,29 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <m:CustomTextBox x:Name="textBox" DockPanel.Dock="Top"
-                 VerticalScrollBarVisibility="Auto"
-                 AcceptsReturn="True" AcceptsTab="True"
-                 Background="#21201e" Foreground="White"
-                 DataContext="{Binding CurrentDocument}"
-                 Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 BorderThickness="0" FontFamily="Consolas" FontSize="14">
-        </m:CustomTextBox>
+        <ScrollViewer Style="{StaticResource DarkScrollBar}" DockPanel.Dock="Top" Background="{StaticResource EditorLight}">
+            <DockPanel LastChildFill="True">
+                <TextBlock TextWrapping="NoWrap" DataContext="{Binding LineNumbers, Mode=OneWay}" 
+                           Text="{Binding Text}" MinWidth="19" HorizontalAlignment="Stretch"
+                           TextAlignment="Right" Foreground="{StaticResource EditorBright}"
+                           Background="{StaticResource EditorLight}" Margin="0,0,5,0"
+                           FontFamily="{Binding Path=DataContext.Format.FontFamily, RelativeSource={
+                    RelativeSource Mode=FindAncestor, AncestorType=Window}}" FontSize=
+                                 "{Binding Path=DataContext.Format.FontSize, RelativeSource={
+                    RelativeSource Mode=FindAncestor, AncestorType=Window}}"/>
+                <m:CustomTextBox x:Name="textBox" 
+                         AcceptsReturn="True" AcceptsTab="True"
+                         Background="{StaticResource EditorColor}" Foreground="White"
+                         DataContext="{Binding CurrentDocument}"
+                         Text="{Binding Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         BorderThickness="0" TextChanged="textBox_TextChanged"
+                         FontFamily="{Binding Path=DataContext.Format.FontFamily, RelativeSource={
+                    RelativeSource Mode=FindAncestor, AncestorType=Window}}" FontSize=
+                                 "{Binding Path=DataContext.Format.FontSize, RelativeSource={
+                    RelativeSource Mode=FindAncestor, AncestorType=Window}}">
+                </m:CustomTextBox>
+            </DockPanel>
+        </ScrollViewer>
     </DockPanel>
 
 </Window>

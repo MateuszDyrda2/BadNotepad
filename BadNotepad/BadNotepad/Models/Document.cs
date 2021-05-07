@@ -1,4 +1,5 @@
 ﻿using BadNotepad.ViewModel;
+using System.Windows.Input;
 
 namespace BadNotepad.Models
 {

@@ -14,8 +14,8 @@
                               UseAeroCaptionButtons="False"/>
             </Setter.Value>
         </Setter>
-        <Setter Property="BorderBrush" Value="#1c1c1a"/>
-        <Setter Property="Background" Value="#2b2b27"/>
+        <Setter Property="BorderBrush" Value="{StaticResource EditorDark}"/>
+        <Setter Property="Background" Value="{StaticResource EditorDark}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
@@ -85,7 +85,7 @@
                                             </Setter>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    <Setter Property="Background" Value="#3b352a">
                                                     </Setter>
                                                 </Trigger>
                                             </Style.Triggers>
@@ -122,7 +122,7 @@
                                             </Setter>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    <Setter Property="Background" Value="#3b352a">
                                                     </Setter>
                                                 </Trigger>
                                             </Style.Triggers>
@@ -160,7 +160,7 @@
                                             </Setter>
                                             <Style.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="#2e2c23">
+                                                    <Setter Property="Background" Value="#3b352a">
                                                     </Setter>
                                                 </Trigger>
                                             </Style.Triggers>

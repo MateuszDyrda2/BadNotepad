@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="EditorColor" Color="#21201e"/>
+    <SolidColorBrush x:Key="EditorDark" Color="#1a1817"/>
+    <SolidColorBrush x:Key="EditorLight" Color="#302e2b"/>
+    <SolidColorBrush x:Key="EditorBright" Color="#e8dcc9"/>
+    <SolidColorBrush x:Key="ComplementaryEditor" Color="#1f1e21"/>
+    <SolidColorBrush x:Key="MonochromaticEditor" Color="#3b352a"/>
+    <SolidColorBrush x:Key="TriadicA" Color="#211e20"/>
+    <SolidColorBrush x:Key="TriadicB" Color="#1e2120"/>
+</ResourceDictionary>

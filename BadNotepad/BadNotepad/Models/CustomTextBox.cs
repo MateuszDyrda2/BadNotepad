@@ -41,12 +41,6 @@ namespace BadNotepad.Models
                             CaretIndex = caret + 1;
                             e.Handled = true;
                         }break;
-                    case Key.OemComma: {
-                            int caret = CaretIndex;
-                            Text = Text.Insert(CaretIndex, "<>");
-                            CaretIndex = caret + 1;
-                            e.Handled = true;
-                        }break;
                     case Key.OemOpenBrackets: {
                             int caret = CaretIndex;
                             string insert = string.Empty;
@@ -69,6 +63,23 @@ namespace BadNotepad.Models
                 e.Handled = true;
             }
         }
+        void SaveDocument()
+        {
+            Document doc = DataContext as Document;
+            if(doc != null)
+            {
+                FileSystem.SaveDocument(doc);
+            }
+        }
+        void SaveDocumentAs()
+        {
+            Document doc = DataContext as Document;
+            if(doc != null)
+            {
+                FileSystem.SaveDocumentAs(doc);
+            }
+        }
+
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             var key = e.Key == Key.System ? e.SystemKey : e.Key;
@@ -88,6 +99,13 @@ namespace BadNotepad.Models
             {
                 switch (key)
                 {
+                    case Key.Enter: {
+                            int linePos = GetLineIndexFromCharacterIndex(CaretIndex);
+                            int charPos = GetCharacterIndexFromLineIndex(linePos);
+                            Text = Text.Insert(charPos, System.Environment.NewLine);
+                            CaretIndex = charPos;
+                            e.Handled = true;
+                        }break;
                     case Key.X: {
                             if (string.IsNullOrEmpty(SelectedText))
                             {
@@ -124,7 +142,15 @@ namespace BadNotepad.Models
                         e.Handled = true;
                         } break;
                     case Key.S: {
-                            
+                            if (shift)
+                            {
+                                SaveDocumentAs();
+                            }
+                            else
+                            {
+                                SaveDocument();            
+                            }
+                            e.Handled = true;
                         } break;
                     case Key.C: {
                             if (string.IsNullOrEmpty(SelectedText))
